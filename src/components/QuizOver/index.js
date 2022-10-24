@@ -1,36 +1,103 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 
 const QuizOver = React.forwardRef((props, ref) => {
+  const {
+    levelNames,
+    score,
+    maxQuestions,
+    quizLevel,
+    percent,
+    loadLevelQuestions,
+  } = props;
 
-  const [asked, setAsked] = useState([])
+  console.log(levelNames)
 
-  useEffect(()=>{
-    setAsked(ref.current)
-  }, [ref])
+  const [asked, setAsked] = useState([]);
 
-  const questionAnswer = asked.map(question =>{
-    return (
-      <tr key={question.id}>
-        <td>{question.question}</td>
-        <td>{question.answer}</td>
-        <td>
-          <button className="btnInfo">Infos</button>
+  useEffect(() => {
+    setAsked(ref.current);
+  }, [ref]);
+
+  const averageGrade = maxQuestions / 2;
+
+  if (score < averageGrade) {
+    // setTimeout(() => loadLevelQuestions(0),3000)
+    setTimeout(() => loadLevelQuestions(quizLevel),3000)
+
+  }
+
+  const decision =
+    score >= averageGrade ? (
+      <>
+        <div className="stepsBtnContainer">
+          {quizLevel < levelNames.length ? (
+            <>
+              <p className="successMsg">BRAVO! passez au niveau suivant!</p>
+              <button
+                onClick={() => loadLevelQuestions(quizLevel)}
+                className="btnResult success"
+              >
+                Niveau Suivant
+              </button>
+            </>
+          ) : (
+            <>
+              <p className="successMsg">BRAVO! vous etes un expert!</p>
+              <button
+                onClick={() => loadLevelQuestions(0)}
+                className="btnResult gameOver"
+              >
+                Accueil
+              </button>
+            </>
+          )}
+        </div>
+        <div className="percentage">
+          <div className="progressPercent">Réussite: {percent} %</div>
+          <div className="progressPercent">
+            Note:{score}/{maxQuestions}
+          </div>
+        </div>
+      </>
+    ) : (
+      <>
+        <div className="stepsBtnContainer">
+          <p className="failureMsg">Vous avez échoué !</p>
+        </div>
+        <div className="percentage">
+          <div className="progressPercent">Réussite: {percent} %</div>
+          <div className="progressPercent">
+            Note: {score}/{maxQuestions}
+          </div>
+        </div>
+      </>
+    );
+
+  const questionAnswer =
+    score >= averageGrade ? (
+      asked.map((question) => {
+        return (
+          <tr key={question.id}>
+            <td>{question.question}</td>
+            <td>{question.answer}</td>
+            <td>
+              <button className="btnInfo">Infos</button>
+            </td>
+          </tr>
+        );
+      })
+    ) : (
+      <tr>
+        <td colSpan="3">
+          <div className="loader"></div>
+          <p style={{ textAlign: "center", color: "red" }}>Pas de réponses</p>
         </td>
       </tr>
-    )
-  })
-
+    );
 
   return (
     <>
-      <div className="stepsBtnContainer">
-        <p className="successMsg">BRAVO! PASSEZ AU NIVEAU SUIVANT</p>
-        <button className="btnResult success">Niveau Suivant</button>
-      </div>
-      <div className="percentage">
-        <div className="progressPercent">Réussite: 10%</div>
-        <div className="progressPercent">Note 10/10</div>
-      </div>
+      {decision}
       <hr />
       <p>Les réponses aux questions posées</p>
       <div className="answerContainer">
@@ -42,9 +109,7 @@ const QuizOver = React.forwardRef((props, ref) => {
               <th>Infos</th>
             </tr>
           </thead>
-          <tbody>
-            {questionAnswer}
-          </tbody>
+          <tbody>{questionAnswer}</tbody>
         </table>
       </div>
     </>

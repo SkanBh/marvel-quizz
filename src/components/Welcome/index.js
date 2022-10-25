@@ -5,6 +5,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import Logout from "../Logout/index";
 import Quiz from "../Quiz/index";
+import Loader from "../Loader";
 
 const Welcome = () => {
   const [userSession, setUserSession] = useState(null);
@@ -37,10 +38,10 @@ const Welcome = () => {
   }, [userSession]);
 
   return userSession === null ? (
-    <Fragment>
-      <div className="loader"></div>
-      <p className="loaderText">Loading...</p>
-    </Fragment>
+    <Loader
+          loadingMsg={"Authentification ..."}
+          styling={{textAlign:'center', color:'#FFFFFF'}}
+          />
   ) : (
     <div className="quiz-bg">
       <div className="container">

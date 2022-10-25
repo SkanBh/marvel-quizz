@@ -1,12 +1,20 @@
-import React from 'react'
+import React from "react";
+import { Stepper } from "react-form-stepper";
 
-const Levels = () => {
+const Levels = ({ levelNames, quizLevel }) => {
   return (
-    <div className="levelsContainer">
-                <h2 className="headingLevels">Débutant</h2>
+    <div className="levelsContainer" style={{ background: "transparent" }}>
+      <Stepper
+        style={{ width: "100%" }}
+        steps={[
+          { label: "DEBUTANT" },
+          { label: "CONFIRME" },
+          { label: "EXPERT" },
+        ]}
+        activeStep={quizLevel}
+      />
+    </div>
+  );
+};
 
-            </div>
-  )
-}
-
-export default Levels
+export default Levels;

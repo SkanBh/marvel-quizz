@@ -5,6 +5,8 @@ import { QuizMarvel } from "../QuizMarvel";
 import Levels from "../Levels";
 import ProgressBar from "../ProgressBar";
 import QuizOver from "../QuizOver";
+import { FaChevronRight } from "react-icons/fa";
+
 
 class Quiz extends Component {
 
@@ -187,7 +189,7 @@ class Quiz extends Component {
           }`}
           onClick={() => this.submitAnswer(option)}
         >
-          {option}
+          <FaChevronRight/> {option}
         </p>
       );
     });
@@ -204,7 +206,7 @@ class Quiz extends Component {
         />
     ) : (
       <>
-        <Levels />
+        <Levels levelNames={this.state.levelNames} quizLevel={this.state.quizLevel}/>
         <ProgressBar 
           idQuestion={this.state.idQuestion} 
           maxQuestions={this.state.maxQuestions}

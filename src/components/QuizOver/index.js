@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { TfiCup } from "react-icons/tfi";
+import Loader from "../Loader";
+
 
 const QuizOver = React.forwardRef((props, ref) => {
   const {
@@ -42,7 +45,9 @@ const QuizOver = React.forwardRef((props, ref) => {
             </>
           ) : (
             <>
-              <p className="successMsg">BRAVO! vous etes un expert!</p>
+              <p className="successMsg">
+                <TfiCup size="50px"/> BRAVO! vous etes un expert!
+              </p>
               <button
                 onClick={() => loadLevelQuestions(0)}
                 className="btnResult gameOver"
@@ -89,8 +94,10 @@ const QuizOver = React.forwardRef((props, ref) => {
     ) : (
       <tr>
         <td colSpan="3">
-          <div className="loader"></div>
-          <p style={{ textAlign: "center", color: "red" }}>Pas de réponses</p>
+          <Loader
+          loadingMsg={"Pas de réponses"}
+          styling={{textAlign:'center', color:'red'}}
+          />
         </td>
       </tr>
     );

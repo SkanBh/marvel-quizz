@@ -1,4 +1,4 @@
-import { useState, Fragment, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { auth, user } from "../Firebase/firebaseConfig";
 import { getDoc } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
